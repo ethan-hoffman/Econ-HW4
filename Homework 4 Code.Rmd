@@ -1,0 +1,22 @@
+---
+title: "Homework 4"
+author: "Ethan Hoffman"
+date: "5/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(janitor)
+library(here)
+library(ggpubr)
+library(kableExtra)
+```
+
+```{r}
+#Question 1
+##Read in the damages.csv file
+damages <- read.csv(here("data", "damages.csv"))
+```
+

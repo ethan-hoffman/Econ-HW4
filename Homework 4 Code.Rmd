@@ -23,7 +23,7 @@ damages <- read.csv(here("data", "damages.csv")) %>%
 
 ##Create a linear model to find the equation in the damages data table
 damages_lm <- lm(damages ~ warming + warm2, data = damages)
-damages_lm[["coefficients"]][["(Intercept)"]]
+damages_lm[["coefficients"]][["(Intercept)"]] <- 0
 
 ##Read in the warming.csv file
 warming <- read.csv(here("data", "warming.csv"))

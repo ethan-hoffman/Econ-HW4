@@ -17,8 +17,13 @@ library(kableExtra)
 
 ```{r}
 #Question 1
-##Read in the damages.csv file
-damages <- read.csv(here("data", "damages.csv"))
+##Read in the damages.csv file and then mutate to set up the quadratic equation
+damages <- read.csv(here("data", "damages.csv")) %>% 
+  mutate(warm2 = warming^2)
+
+##Create a linear model to find the equation in the damages data table
+damages_lm <- lm(damages ~ warming + warm2, data = damages)
+damages_lm[["coefficients"]][["(Intercept)"]]
 
 ##Read in the warming.csv file
 warming <- read.csv(here("data", "warming.csv"))
@@ -27,6 +32,7 @@ warming <- read.csv(here("data", "warming.csv"))
 ggplot(data = damages, aes (x = warming, y = damages))+
   geom_point() +
   geom_smooth(data=damages, aes(x=warming, y=damages))+
+  stat_regline_equation() +
   theme_minimal()
 ```
 

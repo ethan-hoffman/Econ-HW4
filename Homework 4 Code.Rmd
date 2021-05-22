@@ -26,6 +26,7 @@ warming <- read.csv(here("data", "warming.csv"))
 ##Create data visualization of damages.csv data
 ggplot(data = damages, aes (x = warming, y = damages))+
   geom_point() +
+  geom_smooth(data=damages, aes(x=warming, y=damages))+
   theme_minimal()
 ```
 

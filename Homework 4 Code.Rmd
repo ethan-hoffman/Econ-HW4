@@ -14,9 +14,18 @@ library(ggpubr)
 library(kableExtra)
 ```
 
+
 ```{r}
 #Question 1
 ##Read in the damages.csv file
 damages <- read.csv(here("data", "damages.csv"))
+
+##Read in the warming.csv file
+warming <- read.csv(here("data", "warming.csv"))
+
+##Create data visualization of damages.csv data
+ggplot(data = damages, aes (x = warming, y = damages))+
+  geom_point() +
+  theme_minimal()
 ```
 

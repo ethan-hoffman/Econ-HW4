@@ -32,7 +32,6 @@ warming <- read.csv(here("data", "warming.csv"))
 ggplot(data = damages, aes (x = warming, y = damages))+
   geom_point() +
   geom_smooth(data=damages, aes(x=warming, y=damages))+
-  stat_regline_equation() +
   theme_minimal()
 ```
 

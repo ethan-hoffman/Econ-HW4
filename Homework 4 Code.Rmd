@@ -30,7 +30,7 @@ damages_lm[["coefficients"]][["(Intercept)"]] <- 0
 ggplot(data = damages, aes (x = warming, y = damages))+
   geom_point() +
   geom_smooth(data=damages, aes(x=warming, y=damages))+
-  annotate(geom = "text", x = 3.5, y = 1000000000000000, label = "y = (-1.95 * 10^-13) - (3.07 * 10^-12)") +
+  annotate(geom = "text", x = 3.5, y = 1000000000000000, label = "y = 1.95 * (10^-13) x^2 - 3.07 * (10^-12) x") +
   theme_minimal()
 ```
 

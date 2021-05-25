@@ -80,6 +80,29 @@ ggplot(data = warming_difference, aes(x = year,y = damage_difference))+
   theme_minimal()
 ```
 
+```{r}
+###Damages Over Time without the Pulse
+damage_plot <- ggplot(data = warming_difference, aes(x = year, y = damage_base))+
+  geom_point()+
+  theme_minimal()
+
+damage_plot
+
+###Damages Over Time with the Pulse
+damage_pulse_plot <- ggplot(data = warming_difference, aes(x = year, y = damage_pulse))+
+  geom_point()+
+  theme_minimal()
+
+damage_pulse_plot
+
+###Damage difference Over Time without the Pulse
+damage_plot <- ggplot(data = warming_difference, aes(x = year, y = damage_base))+
+  geom_point()+
+  theme_minimal()
+
+damage_plot
+```
+
 
 ```{r}
 #Question 2

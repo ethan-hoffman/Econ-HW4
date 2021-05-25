@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(dplyr)
 library(janitor)
 library(here)
 library(ggpubr)
@@ -61,21 +62,20 @@ ggplot(data = warming, aes(x = year,y = warming_pulse))+
 #Question 2
 ##Use the warming file and estimated damage function from Question 1 to create four plots
 ###Using the damages lm from Question 1, isolate the coefficient values to create this next graph.
-x <- damages_lm[["coefficents"]][["warming"]]
+x <- damages_lm[["coefficients"]][["warming"]]
 x2 <- damages_lm[["coefficients"]][["warm2"]]
 intercept <- damages_lm[["coefficients"]][["(Intercept)"]]
 
 ###Find the Difference in Damages over Time that Arise from the Pulse. After finding the difference, divide the difference by 35 billion tons of carbon which is roughly equal to the amount of annual global emissions
 warming_difference <- warming %>%
-  mutate(damage_base = (warming_baseline * x) + ((warming_baseline)^2 * x2) + intercept,
+  mutate(damage_base = (warming_baseline*x) + ((warming_baseline)^2*x2) + intercept,
          damage_pulse = (warming_pulse * x) + ((warming_pulse)^2 * x2) + intercept,
-         damage_difference = ((damage_pulse - damage_base)),
+         damage_difference = damage_pulse - damage_base,
          damage_annual_cost = damage_difference/35000000000
          )
-##Need to fix because of mutate error
 
 ###Difference in Damages over Time that Arise from the Pulse
-ggplot(data = warming, aes(x = year,y = damage_difference))+
+ggplot(data = warming_difference, aes(x = year,y = damage_difference))+
   geom_point()+
   theme_minimal()
 ```
@@ -85,7 +85,7 @@ ggplot(data = warming, aes(x = year,y = damage_difference))+
 #Question 2
 ##Use the warming file and estimated damage function from Question 1 to create four plots
 ###Difference in Damages over Time from Pulse Per Ton of Carbon
-ggplot(data = warming, aes(x = year,y = damage_annual_Cost))+
+ggplot(data = warming_difference, aes(x = year,y = damage_annual_cost))+
   geom_point()+
   theme_minimal()
 ```

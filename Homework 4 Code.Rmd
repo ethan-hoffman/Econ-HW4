@@ -90,3 +90,9 @@ ggplot(data = warming_difference, aes(x = year,y = damage_annual_cost))+
   theme_minimal()
 ```
 
+
+```{r}
+#Question 3
+##Create a plot of SCC vs. Discount Rate
+```
+

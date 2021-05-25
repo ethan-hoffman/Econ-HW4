@@ -94,5 +94,12 @@ ggplot(data = warming_difference, aes(x = year,y = damage_annual_cost))+
 ```{r}
 #Question 3
 ##Create a plot of SCC vs. Discount Rate
+warming_socialcostcarbon <- warming_difference %>% 
+  mutate(Discount1 = ((damage_pulse)/35000000000)/(1+.01)^X,
+         Discount2 = ((damage_pulse)/35000000000)/(1+.02)^X,
+         Discount3 = ((damage_pulse)/35000000000)/(1+.03)^X,
+         Discount4 = ((damage_pulse)/35000000000)/(1+.04)^X,
+         Discount5 = ((damage_pulse)/35000000000)/(1+.05)^X
+         )
 ```
 

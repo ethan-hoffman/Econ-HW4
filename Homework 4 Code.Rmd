@@ -40,21 +40,7 @@ ggplot(data = damages, aes (x = warming, y = damages))+
 ##Read in the warming.csv file
 warming <- read.csv(here("data", "warming.csv"))
 
-##Use the warming file and estimated damage function from Question 1 to create four plots
-###Damages Over Time without the Pulse
-ggplot(data = warming, aes(x = year, y = warming_baseline))+
-  geom_point()+
-  theme_minimal()
-```
 
-
-```{r}
-#Question 2
-##Use the warming file and estimated damage function from Question 1 to create four plots
-###Damages Over Time with the Pulse
-ggplot(data = warming, aes(x = year,y = warming_pulse))+
-  geom_point()+
-  theme_minimal()
 ```
 
 
@@ -74,10 +60,6 @@ warming_difference <- warming %>%
          damage_annual_cost = damage_difference/35000000000
          )
 
-###Difference in Damages over Time that Arise from the Pulse
-ggplot(data = warming_difference, aes(x = year,y = damage_difference))+
-  geom_point()+
-  theme_minimal()
 ```
 
 ```{r}

@@ -13,6 +13,7 @@ library(janitor)
 library(here)
 library(ggpubr)
 library(kableExtra)
+library(data.table)
 ```
 
 
@@ -110,8 +111,18 @@ scc_table <- warming_scc %>%
 
 scc_table
 
-ggplot(data = warming_scc, aes(x = c[1,2,3,4,5], y = ))
+trans_scc_table <- t(scc_table)
 
+discount_scc = data.table(
+  SCC = c(81.2301056376792, 36.9328804024112, 16.9218929850311, 7.8119557882259, 3.6331472085021),
+  Discount_rate = c("1%", "2%", "3%", "4%", "5%")
+)
+
+discount_scc
+
+ggplot(data = discount_scc, aes(x = Discount_rate, y = SCC)) +
+  geom_point() +
+  geom_smooth(data = discount_scc, aes(x = Discount_rate, y = SCC))
 
 ```
 

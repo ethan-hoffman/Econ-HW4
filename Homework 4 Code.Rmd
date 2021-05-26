@@ -14,6 +14,7 @@ library(here)
 library(ggpubr)
 library(kableExtra)
 library(data.table)
+library(basicTrendline)
 ```
 
 
@@ -55,6 +56,7 @@ intercept <- damages_lm[["coefficients"]][["(Intercept)"]]
 ###Find the Difference in Damages over Time that Arise from the Pulse. After finding the difference, divide the difference by 35 billion tons of carbon which is roughly equal to the amount of annual global emissions
 warming_difference <- warming %>%
   mutate(damage_base = (warming_baseline*x) + ((warming_baseline)^2*x2) + intercept,
+         damage_high = ((warming_baseline*1.5)*x) + ((warming_baseline*1.5)^2*x2) + intercept,
          damage_pulse = (warming_pulse * x) + ((warming_pulse)^2 * x2) + intercept,
          damage_difference = damage_pulse - damage_base,
          damage_annual_cost = damage_difference/35000000000
@@ -115,14 +117,42 @@ trans_scc_table <- t(scc_table)
 
 discount_scc = data.table(
   SCC = c(81.2301056376792, 36.9328804024112, 16.9218929850311, 7.8119557882259, 3.6331472085021),
-  Discount_rate = c("1%", "2%", "3%", "4%", "5%")
+  Discount_rate = c(1, 2, 3, 4, 5)
 )
 
 discount_scc
 
 ggplot(data = discount_scc, aes(x = Discount_rate, y = SCC)) +
   geom_point() +
-  geom_smooth(data = discount_scc, aes(x = Discount_rate, y = SCC))
+  geom_smooth(data = discount_scc, aes(x = Discount_rate, y = SCC), span = 1, se = FALSE)
 
+```
+
+```{r}
+# Question 4 Ramsey Rule
+p = .001
+n = 2
+g = 0.01
+
+r = p + n*g
+
+r
+
+SCC2.1 = ((sum(warming_scc$damage_annual_cost))/(1+0.021)^80)
+SCC2.1
+```
+
+```{r}
+# Question 5
+## Expected present value of damages under Policy A 
+
+p1 = 0.5
+x_1 = (2.025316e+14)/(1+0.02)^80
+p2 = 0.5
+x_2 = (4.633036e+14)/(1+0.02)^80
+
+E = (p1 * x_1) + (p2 * x_2)
+
+E
 ```
 

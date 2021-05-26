@@ -106,7 +106,7 @@ warming_scc <- warming_difference %>%
 
 scc_table <- warming_scc %>% 
   select("Discount1", "Discount2", "Discount3", "Discount4", "Discount5") %>% 
-  select(,2)
+  slice(1)
 
 scc_table
 

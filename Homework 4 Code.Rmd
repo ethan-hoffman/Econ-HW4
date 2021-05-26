@@ -144,15 +144,33 @@ SCC2.1
 
 ```{r}
 # Question 5
-## Expected present value of damages under Policy A 
+## Expected present value of damages up to 2100 under Policy A 
 
 p1 = 0.5
-x_1 = (2.025316e+14)/(1+0.02)^80
+x_1 = sum(warming_difference$damage_base)/(1+0.02)^80
 p2 = 0.5
-x_2 = (4.633036e+14)/(1+0.02)^80
+x_2 = sum(warming_difference$damage_high)/(1+0.02)^80
 
 E = (p1 * x_1) + (p2 * x_2)
 
 E
+
+## Expected present value of damages up to 2100 under Policy B
+policy_b_2050 <- warming_difference %>% 
+  filter(year < 2051)
+
+a = sum(warming_difference$damage_base)
+b = (2.853968e+13)*50
+a + b
+E_policy_b = (a + b)/(1+0.02)^80
+E_policy_b
+
+
+## Find the difference between damages under Policy A and Policy B given X costs for Policy B
+X_cost = E - E_policy_b
+X_cost
+
+
+## A risk-averse population would be inclined to favor Policy B because Policy A has a 50% probability that the damages will be greater than under Policy B
 ```
 

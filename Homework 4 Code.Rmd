@@ -1,12 +1,12 @@
 ---
 title: "Homework 4"
-author: "Ethan Hoffman"
+author: "Ethan Hoffman, Gabrielle Barsotti, and Halley McVeigh"
 date: "5/22/2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(dplyr)
 library(janitor)
@@ -16,6 +16,8 @@ library(kableExtra)
 library(data.table)
 library(basicTrendline)
 ```
+
+### Question 1
 
 
 ```{r}
@@ -33,9 +35,11 @@ ggplot(data = damages, aes (x = warming, y = damages))+
   geom_point() +
   geom_smooth(data=damages, aes(x=warming, y=damages))+
   annotate(geom = "text", x = 3.5, y = 1000000000000000, label = "y = 1.95 * (10^-13) x^2 - 3.07 * (10^-12) x") +
-  theme_minimal()
+  theme_minimal() +
+  labs(x = "Warming (degrees C)", y = "Damages ($)", title = "Damages of climate change under different climate trajectories")
 ```
 
+### Question 2
 
 ```{r}
 #Question 2
@@ -64,41 +68,48 @@ warming_difference <- warming %>%
 
 ```
 
+#### Plot 1-4
 ```{r}
 ###Damages Over Time without the Pulse
 damage_plot <- ggplot(data = warming_difference, aes(x = year, y = damage_base))+
   geom_point()+
-  theme_minimal()
+  theme_minimal() +
+  labs(title = "Plot 1: Damages over time without pulse", x = "Year", y = "Damages ($)")
 
 damage_plot
 
 ###Damages Over Time with the Pulse
 damage_pulse_plot <- ggplot(data = warming_difference, aes(x = year, y = damage_pulse))+
   geom_point()+
-  theme_minimal()
+  theme_minimal() +
+  labs(title = "Plot 2: Damages over time with pulse", x = "Year", y = "Damages ($)")
 
 damage_pulse_plot
 
 ###Damage difference Over Time without the Pulse
 damage_difference_plot <- ggplot(data = warming_difference, aes(x = year, y = damage_difference))+
   geom_point()+
-  theme_minimal()
+  theme_minimal() +
+  labs(title = "Plot 3: Differences in damages over time from pulse", x = "Year", y = "Damages ($)")
 
 damage_difference_plot
 
 ###Damage difference over time per ton of carbon
 damage_ton_plot <- ggplot(data = warming_difference, aes(x = year, y = damage_annual_cost)) +
   geom_point() +
-  theme_minimal()
+  theme_minimal() +
+  labs(title = "Plot 4: Difference in damages over time from pulse per ton of CO2", x = "Year", y = "Damages ($)")
 
 damage_ton_plot
 ```
+
+### Question 3
 
 
 ```{r}
 #Question 3
 ##Create a plot of SCC vs. Discount Rate
-
+warming_scc <- warming_difference
 
 warming_scc <- warming_difference %>% 
   mutate(Discount1 = ((sum(warming_scc$damage_annual_cost))/(1+0.01)^80),
@@ -124,9 +135,14 @@ discount_scc
 
 ggplot(data = discount_scc, aes(x = Discount_rate, y = SCC)) +
   geom_point() +
-  geom_smooth(data = discount_scc, aes(x = Discount_rate, y = SCC), span = 1, se = FALSE)
+  geom_smooth(data = discount_scc, aes(x = Discount_rate, y = SCC), span = 1, se = FALSE) +
+  labs(title = "Social Cost of Carbon (SCC) by discount rates", x = "Discount rates (%)", y = "Social Cost of Carbon (SCC)")
 
 ```
+
+### Question 4 
+
+#### The SCC with a discount rate of 2.1% is $34.15 calculated using the Ramsey Rule. This value is represented on the plot below, shown in coral.
 
 ```{r}
 # Question 4 Ramsey Rule
@@ -140,7 +156,24 @@ r
 
 SCC2.1 = ((sum(warming_scc$damage_annual_cost))/(1+0.021)^80)
 SCC2.1
+
+# Add 2.1% discount rate SCC point on plot
+ggplot(data = discount_scc, aes(x = Discount_rate, y = SCC)) +
+  geom_point() +
+  geom_smooth(data = discount_scc, aes(x = Discount_rate, y = SCC), span = 1, se = FALSE) +
+  labs(title = "Social Cost of Carbon (SCC) by discount rates", x = "Discount rates (%)", y = "Social Cost of Carbon (SCC)") +
+  geom_point(aes(x = 2.1, y = 34.14818, color = "coral12"), show.legend = FALSE)
 ```
+
+### Question 5
+
+#### The expected present value of damages up to 2100 under Policy A is $1,869,052,186,623,438.
+
+#### The expected present value of damages up to 2100 under Policy B is $1,422,733,591,966,428.
+
+#### The difference between damages under Policy A and Policy B given X costs for Policy B is $446,318,594,657,010.
+
+#### A risk-averse population would be inclined to favor Policy B because Policy A has a 50% probability that the damages will be greater than under Policy B. Despite Policy B having associated costs, unlike under Policy A, it still is more economically stable.
 
 ```{r}
 # Question 5
@@ -171,6 +204,7 @@ X_cost = E - E_policy_b
 X_cost
 
 
-## A risk-averse population would be inclined to favor Policy B because Policy A has a 50% probability that the damages will be greater than under Policy B
+## A risk-averse population would be inclined to favor Policy B because Policy A has a 50% probability that the damages will be greater than under Policy B. Despite Policy B having associated costs, unlike under Policy A, it still is more economically stable.
+
 ```
 
